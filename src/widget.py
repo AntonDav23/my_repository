@@ -9,12 +9,9 @@ def mask_account_card(process_info: str) -> str:
         mask_numbers = f"{process_info[:5]} ** {process_info[-4:]}"
     return mask_numbers
 
+from datetime import datetime
 
 def get_date(format_date: str) -> str:
     """Функция меняет формат даты"""
-    data = format_date[:10]
-    new_data = []
-    for element in data.split("-"):
-        new_data.append(element)
-        reversed_new_data = new_data[::-1]
-    return ".".join(reversed_new_data)
+    date_object = datetime.strptime(format_date, '%Y-%m-%dT%H:%M:%S.%f')
+    return date_object.strftime('%d.%m.%Y')
