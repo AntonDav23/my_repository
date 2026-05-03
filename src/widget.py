@@ -28,7 +28,7 @@ def mask_account_card(input_str: str) -> str:
     return input_str
 
 
-def get_date(format_date: str) -> str:
+def get_date(date_string: str) -> str:
     """Функция меняет формат даты"""
-    date_object = datetime.strptime(format_date, "%Y-%m-%dT%H:%M:%S.%f")
+    date_object = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%f")
     return date_object.strftime("%d.%m.%Y")
