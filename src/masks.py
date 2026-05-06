@@ -1,8 +1,7 @@
 def get_mask_card_number(card_number: str) -> str:
-    """Функция, которая маскирует номер банковской карты"""
+    """Функция, которая форматирует номер банковской карты"""
     card_number_str = str(card_number).strip()
-    masked_card = f"{card_number_str[:4]} {card_number_str[4:6]} {card_number_str[-4:]}"
-
+    masked_card = f"{card_number_str[:4]} {card_number_str[4:6]}** **** {card_number_str[-4:]}"
     return masked_card
 
 
