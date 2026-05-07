@@ -15,14 +15,19 @@
 │   ├── masks.py    # Функции маскировки данных  
 │   ├── widget.py   # Функции форматирования (даты, смешанные данные)  
 │   └── processing.py   # Функции фильтрации и сортировки данных  
-
+├── tests/  
+│   ├── conftest.py   # Общие фикстуры (тестовые данные) для всех тестов  
+│   ├── test_masks.py     # Тесты для функций маскировки  
+│   ├── test_widget.py    # Тесты для функций форматирования  
+│   └── test_processing.py  
 ## Установка и использование
 1. Склонируйте или скачайте репозиторий: [Мой репозиторий](https://github.com/AntonDav23/my_repository.git)
 2. Импортируйте необходимые функции в свой скрипт:  
     - from src.masks import get_mask_card_number, get_mask_account
     - from src.widget import mask_account_card, get_date
     - from src.processing import filter_by_state, sort_by_date
-
+3. Запуск тестов (pytest)  
+Запускает все тесты, написанные для проекта
 ## Документация
 1. **Модуль masks**  
 - `get_mask_card_number(card_number: str) -> str`  
