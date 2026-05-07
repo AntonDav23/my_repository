@@ -1,4 +1,5 @@
 import pytest
+
 from src.masks import get_mask_account, get_mask_card_number
 
 
@@ -9,7 +10,14 @@ def test_get_mask_card_number_standard() -> None:
     assert get_mask_card_number(card) == expected
 
 
-@pytest.mark.parametrize("invalid_input", ["7000", "", None,])
+@pytest.mark.parametrize(
+    "invalid_input",
+    [
+        "7000",
+        "",
+        None,
+    ],
+)
 # ---------------------------------------------
 def test_get_mask_card_number_invalid(invalid_input) -> None:
     """Проверяет, что функция возвращает предсказуемый результат на некорректных данных."""

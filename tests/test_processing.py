@@ -1,4 +1,5 @@
 import pytest
+
 from src.processing import filter_by_state, sort_by_date
 
 
@@ -40,9 +41,7 @@ def test_sort_by_date_same_dates(sample_transactions: list[dict]) -> None:
     """Проверяет стабильность сортировки при одинаковых датах."""
     result = sort_by_date(sample_transactions)
 
-    # Находим индексы элементов с id 3 и 4 в отсортированном списке
     index_3 = next(i for i, item in enumerate(result) if item["id"] == 3)
     index_4 = next(i for i, item in enumerate(result) if item["id"] == 4)
 
-    # Проверяем, что элемент с id=3 идет раньше элемента с id=4
     assert index_3 < index_4
