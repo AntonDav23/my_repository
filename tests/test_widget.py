@@ -1,6 +1,6 @@
 import re
 from datetime import datetime
-from masks import get_mask_account, get_mask_card_number
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(input_str: str) -> str:
