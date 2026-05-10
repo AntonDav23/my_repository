@@ -1,5 +1,7 @@
 import pytest
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
+
 
 @pytest.fixture
 def sample_transactions():
@@ -28,23 +30,23 @@ def sample_transactions():
     ]
 
 
-def test_filter_by_currency_iterator(sample_transactions):
+def test_filter_by_currency_iterator(sample_transactions) -> None:
     usd_transactions = filter_by_currency(sample_transactions, "USD")
     assert next(usd_transactions)["id"] == 939719570
 
 
-def test_transaction_descriptions(sample_transactions):
+def test_transaction_descriptions(sample_transactions) -> None:
     descriptions = transaction_descriptions(sample_transactions)
     assert next(descriptions) == "Перевод организации"
 
 
-def test_card_number_generator_basic():
+def test_card_number_generator_basic() -> None:
     result = list(card_number_generator(1, 5))
     expected = [
         "0000 0000 0000 0001",
         "0000 0000 0000 0002",
         "0000 0000 0000 0003",
         "0000 0000 0000 0004",
-        "0000 0000 0000 0005"
+        "0000 0000 0000 0005",
     ]
     assert result == expected

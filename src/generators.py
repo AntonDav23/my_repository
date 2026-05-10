@@ -1,4 +1,7 @@
-def filter_by_currency(transactions: list, currency_code: str) -> 'list':
+from typing import Generator
+
+
+def filter_by_currency(transactions: list, currency_code: str) -> "Generator":
     """
     Фильтрует транзакции по коду валюты и возвращает итератор.
     """
@@ -8,7 +11,7 @@ def filter_by_currency(transactions: list, currency_code: str) -> 'list':
             yield transaction
 
 
-def transaction_descriptions(transactions: list) -> 'list':
+def transaction_descriptions(transactions: list) -> "Generator":
     """
     Генератор, который возвращает описание каждой транзакции.
     """
@@ -16,7 +19,7 @@ def transaction_descriptions(transactions: list) -> 'list':
         yield transaction.get("description", "")
 
 
-def card_number_generator(start: int = 1, end: int = 9999_9999_9999_9999) -> 'list':
+def card_number_generator(start: int = 1, end: int = 9999_9999_9999_9999) -> "Generator":
     """
     Генератор, который выдает номера банковских карт в заданном диапазоне.
     Номера генерируются в формате XXXX XXXX XXXX XXXX.
