@@ -12,34 +12,44 @@
 Проект имеет простую и понятную структуру. Весь исходный код находится в папке src.  
 банковское-приложение/  
 ├── src/  
+│   ├── generators.py       # Генераторы для работы с данными  
 │   ├── masks.py    # Функции маскировки данных  
 │   ├── widget.py   # Функции форматирования (даты, смешанные данные)  
 │   └── processing.py   # Функции фильтрации и сортировки данных  
 ├── tests/  
 │   ├── conftest.py   # Общие фикстуры (тестовые данные) для всех тестов  
+│   ├── test_generators.py   # Тесты для генераторов  
 │   ├── test_masks.py     # Тесты для функций маскировки  
 │   ├── test_widget.py    # Тесты для функций форматирования  
 │   └── test_processing.py  
 ## Установка и использование
 1. Склонируйте или скачайте репозиторий: [Мой репозиторий](https://github.com/AntonDav23/my_repository.git)
 2. Импортируйте необходимые функции в свой скрипт:  
+    - from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
     - from src.masks import get_mask_card_number, get_mask_account
     - from src.widget import mask_account_card, get_date
     - from src.processing import filter_by_state, sort_by_date
 3. Запуск тестов (pytest)  
-Запускает все тесты, написанные для проекта
+ - Запускает все тесты, написанные для проекта 
+ - Генерация HTML-отчёта о покрытии
+ - Создаёт интерактивный HTML-отчёт.Команда: `pytest --cov=src --cov-report=html`. Отчёт будет доступен в папке `htmlcov/index.html.`
 ## Документация
-1. **Модуль masks**  
-- `get_mask_card_number(card_number: str) -> str`  
+1. **Модуль Generators**  
+содержит функции-генераторы для эффективной работы с данными.
+- `filter_by_currency`: Фильтрует транзакции по валюте, возвращая итератор.  
+- `transaction_descriptions`: Возвращает итератор с описаниями операций.  
+- `card_number_generator`: Генерирует номера карт в заданном диапазоне.  
+2. **Модуль masks**  
+- `get_mask_card_number(card_number: str)`  
 Маскирует номер банковской карты.  
 **Вход**: "7000792289606361"  
 **Выход**: "7000 79** **** 6361"
-- `get_mask_account(account_number: str)` -> str  
+- `get_mask_account(account_number: str)`  
 Маскирует номер банковского счета.  
 **Вход**: "73654108430135874305"  
 **Выход**: "Счет **4305"
 2. **Модуль widget**
-- `mask_account_card(input_str: str) -> str`   
+- `mask_account_card(input_str: str)`   
 Универсальная функция. Обрабатывает строку и применяет нужную маску в зависимости от того, что найдено (карта или счет).
 **Вход**: "Visa Platinum 7000792289606361"  
 **Выход**: "Visa Platinum 7000 79** **** 6361"  
