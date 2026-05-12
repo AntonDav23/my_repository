@@ -1,5 +1,5 @@
-from functools import wraps
 from datetime import datetime
+from functools import wraps
 from typing import Any, Callable, Optional
 
 
@@ -33,7 +33,7 @@ def log(filename: Optional[str] = None) -> Callable[..., Any]:
 def _write_log(message: str, filename: Optional[str]) -> None:
     """Записывает сообщение в файл или выводит в консоль."""
     if filename:
-        with open(filename, 'a', encoding='utf-8') as f:
-            f.write(message + '\n')
+        with open(filename, "a", encoding="utf-8") as f:
+            f.write(message + "\n")
     else:
         print(message)
