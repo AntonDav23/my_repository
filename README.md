@@ -12,12 +12,14 @@
 Проект имеет простую и понятную структуру. Весь исходный код находится в папке src.  
 банковское-приложение/  
 ├── src/  
+│   ├── decorators.py       # Декораторы (например, для логирования)  
 │   ├── generators.py       # Генераторы для работы с данными  
 │   ├── masks.py    # Функции маскировки данных  
 │   ├── widget.py   # Функции форматирования (даты, смешанные данные)  
 │   └── processing.py   # Функции фильтрации и сортировки данных  
 ├── tests/  
 │   ├── conftest.py   # Общие фикстуры (тестовые данные) для всех тестов  
+│   ├── test_generators.py   # Тесты для генераторов  
 │   ├── test_generators.py   # Тесты для генераторов  
 │   ├── test_masks.py     # Тесты для функций маскировки  
 │   ├── test_widget.py    # Тесты для функций форматирования  
@@ -29,12 +31,16 @@
     - from src.masks import get_mask_card_number, get_mask_account
     - from src.widget import mask_account_card, get_date
     - from src.processing import filter_by_state, sort_by_date
+    - from src.decorators import log
 3. Запуск тестов (pytest)  
  - Запускает все тесты, написанные для проекта 
  - Генерация HTML-отчёта о покрытии
  - Создаёт интерактивный HTML-отчёт.Команда: `pytest --cov=src --cov-report=html`. Отчёт будет доступен в папке `htmlcov/index.html.`
 ## Документация
-1. **Модуль Generators**  
+1. ** Модуль Decorators**  
+Содержит декораторы для расширения функциональности.  
+`@log(filename=None)`: Логирует выполнение функции (время, аргументы, результат или ошибку).
+2. **Модуль Generators**  
 содержит функции-генераторы для эффективной работы с данными.
 - `filter_by_currency`: Фильтрует транзакции по валюте, возвращая итератор.  
 - `transaction_descriptions`: Возвращает итератор с описаниями операций.  
