@@ -1,5 +1,6 @@
 from typing import Dict, Union
 from external_api import convert_to_rub
+from utils import load_transactions_from_json
 
 
 def filter_by_state(items: list[dict], state_value: str = "EXECUTED") -> list[dict]:
@@ -21,6 +22,4 @@ def get_transaction_amount_in_rub(transaction: Dict) -> Union[float, None]:
         currency = transaction['operationAmount']['currency']['code']
         return convert_to_rub(amount, currency)
     except (KeyError, ValueError):
-        # KeyError - если ключа нет в словаре
-        # ValueError - если amount не является числом
         return None

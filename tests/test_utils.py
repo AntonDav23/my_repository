@@ -1,15 +1,18 @@
 import json
 import pytest
 
-
 from src.utils import load_transactions_from_json
 from src.processing import get_transaction_amount_in_rub
 
 
-def test_load_transactions_success(mocker):
+def test_load_transactions_success(monkeypatch):
     """Тест: Успешная загрузка данных из существующего файла."""
     mock_data = [{"id": 1}]
-    mocker.patch('builtins.open', mocker.mock_open(read_data=json.dumps(mock_data)))
+
+
+    from unittest.mock import mock_open
+
+    monkeypatch.setattr('builtins.open', mock_open(read_data=json.dumps(mock_data)))
 
     result = load_transactions_from_json('fake_path.json')
 
@@ -37,6 +40,8 @@ def test_usd_transaction(monkeypatch):
     """Тест: USD конвертируется через API."""
 
     def mock_get(*args, **kwargs):
+        """Заглушка для ответа API."""
+
         class MockResponse:
             def json(self):
                 return {"success": True, "result": 9500.0}
@@ -57,7 +62,7 @@ def test_usd_transaction(monkeypatch):
 
 def test_broken_transaction():
     """Тест: Если структура данных неверна, возвращается None."""
-    broken = {"operationAmount": {}}  # Нет ключей 'amount' и 'currency'
+    broken = {"operationAmount": {}}
     assert get_transaction_amount_in_rub(broken) is None
 
 
@@ -65,7 +70,7 @@ def test_amount_not_number():
     """Тест: Если amount не число, возвращается None."""
     broken = {
         "operationAmount": {
-            "amount": "abc",  # Не число
+            "amount": "abc",
             "currency": {"code": "RUB"}
         }
     }
