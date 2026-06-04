@@ -1,23 +1,19 @@
-import re
 import logging
 import os
-from typing import List, Dict, Any
+import re
 from collections import Counter
+from typing import Any, Dict, List
 
-
-log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
+log_dir = os.path.join(os.path.dirname(__file__), "..", "logs")
 os.makedirs(log_dir, exist_ok=True)
 
-logger = logging.getLogger('src.search')
+logger = logging.getLogger("src.search")
 logger.setLevel(logging.DEBUG)
 
-handler = logging.FileHandler(os.path.join(log_dir, 'search.log'), mode='w')
+handler = logging.FileHandler(os.path.join(log_dir, "search.log"), mode="w")
 handler.setLevel(logging.DEBUG)
 
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 handler.setFormatter(formatter)
 
 logger.addHandler(handler)
@@ -29,7 +25,7 @@ def process_bank_search(data: List[Dict[str, Any]], search: str) -> List[Dict[st
 
     pattern = re.compile(search, re.IGNORECASE)
 
-    result = [tx for tx in data if 'description' in tx and pattern.search(tx['description'])]
+    result = [tx for tx in data if "description" in tx and pattern.search(tx["description"])]
 
     logger.debug(f"Поиск завершен. Найдено совпадений: {len(result)}")
     return result
@@ -39,7 +35,7 @@ def process_bank_operations(data: List[Dict[str, Any]], categories: List[str]) -
     """Подсчитывает количество банковских операций для каждой из указанных категорий"""
     logger.info(f"Начало подсчета операций по категориям: {categories}")
 
-    all_descriptions = ' '.join(tx.get('description', '').lower() for tx in data)
+    all_descriptions = " ".join(tx.get("description", "").lower() for tx in data)
 
     found_categories = []
     for category in categories:
