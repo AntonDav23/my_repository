@@ -11,49 +11,46 @@
 ## Структура приложения
 Проект имеет простую и понятную структуру. Весь исходный код находится в папке src.  
 банковское-приложение/  
-├── data/                   # Папка с данными (например, JSON-файлы, csv-файлы, XLSX-файлы)  
-│   ├── transactions.csv  
-│   ├── transactions_excel.xlsx  
+├── data/                   # Папка с данными (например, JSON-файлы)  
 │   └── operations.json  
-├── logs/                  # Папка для хранения файлов логов  
-│   ├── file_reader.log  
-│   ├── masks.log  
-│   └── utils.log  
 ├── src/  
 │   ├── decorators.py       # Декораторы (например, для логирования)  
 │   ├── external_api.py     # Логика работы с внешним API (курсы валют)  
-│   ├── file_reader.py      # Чтение данных из файлов (CSV, Excel)  
 │   ├── generators.py       # Генераторы для работы с данными  
 │   ├── masks.py            # Функции маскировки данных  
 │   ├── widget.py           # Функции форматирования (даты, смешанные данные)  
+│   ├── search.py           # Функции поиска и аналитики по данным  
 │   ├── processing.py       # Функции фильтрации и сортировки данных  
 │   └── utils.py            # Функция для работы с файлами  
 ├── tests/  
 │   ├── conftest.py         # Общие фикстуры (тестовые данные) для всех тестов  
-│   ├── test_decorators.py  # Тесты для декораторов    
-│   ├── test_file_reader.py #Тесты для функции чтения файлов (CSV, Excel)  
+│   ├── test_generators.py  # Тесты для генераторов  
 │   ├── test_generators.py  # Тесты для генераторов  
 │   ├── test_masks.py       # Тесты для функций маскировки  
 │   ├── test_widget.py      # Тесты для функций форматирования  
+│   ├──test_search.py       # Тесты для функций поиска и аналитики по данным  
 │   ├── test_processing.py  # Тесты для функции фильтрации и сортировки данных  
 │   └── test_utils.py       # Тесты для функции для работы с файлами
+├── main.py                 # Главная точка входа и логика взаимодействия с пользователем  
 ├── .env.sample             # Образец файла с переменными окружения  
 ├── pyproject.toml          # Конфигурация   
 └── README.md               # информация о программе  
 
 ## Установка и использование
-1. Склонируйте или скачайте репозиторий: [Мой репозиторий](https://github.com/AntonDav23/my_repository.git)
-2. Импортируйте необходимые функции в свой скрипт:  
+1. Запустить программу можно командой: `python -m main`
+2. Склонируйте или скачайте репозиторий: [Мой репозиторий](https://github.com/AntonDav23/my_repository.git)
+3. Импортируйте необходимые функции в свой скрипт:  
     - from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
     - from src.masks import get_mask_card_number, get_mask_account
     - from src.widget import mask_account_card, get_date
     - from src.processing import filter_by_state, sort_by_date
+    - from src.search import process_bank_search  
     - from src.decorators import log
-3. Запуск тестов (pytest)  
+4. Запуск тестов (pytest)  
  - Запускает все тесты, написанные для проекта 
  - Генерация HTML-отчёта о покрытии
  - Создаёт интерактивный HTML-отчёт.Команда: `pytest --cov=src --cov-report=html`. Отчёт будет доступен в папке `htmlcov/index.html.`
-4. Система логирования  
+5. Система логирования  
 В проекте настроена система записи логов для отслеживания работы модулей.
 
 Расположение: Папка logs/ в корне проекта.  
@@ -62,7 +59,7 @@
 Пример: `2024-06-05 12:00:00 - src.file_reader - INFO - Чтение CSV-файла: data/transactions.csv`  
 
 ## Документация
-1. ** Модуль Decorators**  
+1. **Модуль Decorators**  
 Содержит декораторы для расширения функциональности.  
 `@log(filename=None)`: Логирует выполнение функции (время, аргументы, результат или ошибку).
 2. **Модуль Generators**  
@@ -102,7 +99,7 @@
 6. **Модуль utils**
 - `load_transactions_from_json(file_path: str) -> list`  
 Загружает данные о транзакциях из JSON-файла. Возвращает пустой список, если файл не найден, пуст или содержит данные не в виде списка.  
-7. **Модуль external_api**  
+6. **Модуль external_api**  
 - `convert_to_rub(amount: float, from_currency: str) -> float`  
 Конвертирует сумму из USD или EUR в рубли по текущему курсу через внешний API.  
 Если валюта уже RUB, возвращает исходную сумму.  
@@ -111,5 +108,14 @@
 Предназначен для загрузки финансовых операций из табличных файлов.  
 - `read_csv_to_dicts(file_path: str) -> List[Dict]`: Считывает данные из CSV-файла и возвращает список словарей.  
 - `read_excel_to_dicts(file_path: str) -> List[Dict]`: Считывает данные из Excel-файла (.xlsx) и возвращает список словарей.  
+9. **Модуль search**  
+Предназначен для поиска и аналитики данных
+- `process_bank_search(data: list[dict], search: str) -> list[dict]`: 
+Выполняет поиск подстроки в поле description транзакций. Использует регулярные выражения (re).  
+- `process_bank_operations(data: list[dict], categories: list) -> dict`:
+Подсчитывает количество транзакций для каждой категории из переданного списка  
+10. **Модуль main**  
+Содержит функцию `main()`, которая реализует консольное меню и связывает все модули между собой.  
 ## Лицензия.
-Этот проект распространяется под лицензией MIT.
+Этот проект распространяется под лицензией MIT.  
+Copyright (c) 2026 **Anton Davydov** при поддержке **_Skypro_**

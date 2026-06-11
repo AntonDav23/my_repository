@@ -1,6 +1,6 @@
 from typing import Dict, Union
-from external_api import convert_to_rub
-from utils import load_transactions_from_json
+from src.external_api import convert_to_rub
+from src.utils import load_transactions_from_json
 
 
 def filter_by_state(items: list[dict], state_value: str = "EXECUTED") -> list[dict]:
